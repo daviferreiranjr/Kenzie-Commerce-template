@@ -9,6 +9,7 @@ class Order(models.Model):
 
     quantity = models.IntegerField()
     status = models.CharField(max_length=50, choices=ExpectedStatus.choices, default=ExpectedStatus.PEDIDO_REALIZADO)
+    total_value = models.FloatField()
     created_at = models.DateField(auto_now_add=True)
 
     user = models.ForeignKey(
