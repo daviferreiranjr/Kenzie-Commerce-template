@@ -6,6 +6,7 @@ class Address(models.Model):
     city = models.CharField(max_length=50)
     neighborhood = models.CharField(max_length=50)
     street = models.CharField(max_length=50)
+    number = models.IntegerField()
 
     user = models.OneToOneField(
         "users.User",
