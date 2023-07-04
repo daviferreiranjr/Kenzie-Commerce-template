@@ -13,6 +13,7 @@ class Product(models.Model):
     category = models.CharField(max_length=50, choices=ExpectedCategory.choices, default=ExpectedCategory.NAO_INFORMADO)
     value = models.DecimalField(max_digits=8, decimal_places=2)
     stock = models.IntegerField()
+    available = models.BooleanField(default=True)
 
     user = models.ForeignKey(
         "users.User",

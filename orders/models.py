@@ -17,9 +17,3 @@ class Order(models.Model):
         on_delete=models.CASCADE,
         related_name="orders",
     )
-
-    cart = models.OneToOneField(
-        "cart.Cart",
-        on_delete=models.CASCADE,
-        related_name="cart",
-    )
