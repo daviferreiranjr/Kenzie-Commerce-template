@@ -5,6 +5,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class AddressView(generics.CreateAPIView):
+    authentication_classes = [JWTAuthentication]
     serializer_class = AddressSerializer
 
     def perform_create(self, serializer):
@@ -13,5 +14,6 @@ class AddressView(generics.CreateAPIView):
 
 class AddressDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
+    serializer_class = AddressSerializer
 
     queryset = Address.objects.all()
