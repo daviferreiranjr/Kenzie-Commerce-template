@@ -2,10 +2,6 @@ from django.db import models
 
 
 class Cart(models.Model):
-
-    class Meta:
-        ordering = ("id")
-
     total_value = models.FloatField()
 
     user = models.OneToOneField(
