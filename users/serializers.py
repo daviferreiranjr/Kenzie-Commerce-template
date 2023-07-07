@@ -1,10 +1,16 @@
 from rest_framework import serializers
 from .models import User
 from rest_framework.validators import UniqueValidator
+from address.models import Address
+
+class AddressSerializerUser(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ["street", "number", "neighborhood", "city", "state"]
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # depth = 2
+    address = AddressSerializerUser()
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -31,8 +37,10 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "username", "password", "email", "is_seller", "is_superuser"]
+        fields = ["id", "username", "password", "email", "is_seller", "is_superuser", "address"]
         extra_kwargs = {
             "password": {"write_only": True},
             "is_superuser": {"read_only": True},
+            "address": {"read_only": True},
         }
+
