@@ -5,7 +5,7 @@ from .serializers import CartSerializer
 from .permissions import IsAdmin, IsCartOwner
 
 
-class CartView(generics.RetrieveUpdateDestroyAPIView):
+class CartDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdmin | IsCartOwner]
 

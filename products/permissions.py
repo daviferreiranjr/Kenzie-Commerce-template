@@ -4,6 +4,7 @@ from rest_framework.views import View
 
 
 
+
 class IsSellerOrAdminPermission(permissions.BasePermission):
     def has_object_permission(self, request, view: View, obj: Product) -> bool:
         if request.method in permissions.SAFE_METHODS:
@@ -14,7 +15,7 @@ class IsSellerOrAdminPermission(permissions.BasePermission):
         )
     
     def has_permission(self, request, view: View) -> bool:
-        return (
-            request.user.is_authenticated
-            and request.user.is_superuser
-        )
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return request.user.is_seller or request.user.is_superuser
+  
