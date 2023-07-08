@@ -4,7 +4,15 @@ from .models import Product, ExpectedCategory
 
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.ChoiceField(choices=ExpectedCategory.choices, default=ExpectedCategory.NAO_INFORMADO)
-
+    available = serializers.SerializerMethodField()
+    
+    def get_available(self, obj: Product):
+        stock = [product.stock for product in obj.all()]
+        available = True
+        if stock <= 0:
+            available = False
+        return available
+    
     class Meta:
         model = Product
         fields = ["id", "name", "stock", "value", "available", "user"]
