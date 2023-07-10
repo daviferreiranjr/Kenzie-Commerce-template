@@ -16,7 +16,6 @@ class OrderView(CreateAPIView):
     serializer_class = OrderSerializer
 
     def perform_create(self, serializer):
-
         order = serializer.save(user=self.request.user)
 
         # products_by_seller = {}
