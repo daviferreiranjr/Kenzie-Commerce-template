@@ -1,8 +1,7 @@
 from .models import User
 from .serializers import UserSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
-# from .permissions import UserAdm, CustomUserPermission
+from .permissions import IsAccountOwner, IsAdmin
 from rest_framework import generics
 
 
@@ -15,6 +14,6 @@ class UserView(generics.ListCreateAPIView):
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     authentication_classes = [JWTAuthentication]
-    # permission_classes = [UserAdm or CustomUserPermission]
+    permission_classes = [IsAdmin or IsAccountOwner]
 
     queryset = User.objects.all()
