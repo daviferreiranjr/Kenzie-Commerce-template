@@ -4,13 +4,12 @@ from .models import Cart
 from products.models import Product
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import CartSerializer
-from .permissions import IsAdminOrSeller, IsCartOwner, IsAdmin
+from .permissions import IsCartOwner, IsAdmin, IsAdminOrSeller
 from products.models import Product
 
 
 class CartView(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAdminOrSeller]
 
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
@@ -22,7 +21,6 @@ class CartView(generics.CreateAPIView):
 
 class CartDetailsView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAdminOrSeller]
 
     queryset = Cart.objects.all()
     serializer_class = CartSerializer

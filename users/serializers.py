@@ -3,6 +3,7 @@ from .models import User
 from rest_framework.validators import UniqueValidator
 from address.models import Address
 
+
 class AddressSerializerUser(serializers.ModelSerializer):
     class Meta:
         model = Address
@@ -32,15 +33,16 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
     email = serializers.EmailField(
-        validators=[UniqueValidator(User.objects.all(), "This field must be unique.")]
+        validators=[UniqueValidator(
+            User.objects.all(), "This field must be unique.")]
     )
 
     class Meta:
         model = User
-        fields = ["id", "username", "password", "email", "is_seller", "is_superuser", "address"]
+        fields = ["id", "username", "password", "email",
+                  "is_seller", "is_superuser", "address"]
         extra_kwargs = {
             "password": {"write_only": True},
             "is_superuser": {"read_only": True},
             "address": {"read_only": True},
         }
-
