@@ -1,6 +1,8 @@
 from .models import Cart
 from rest_framework import serializers
 from users.models import User
+from rest_framework.validators import UniqueValidator
+from cart.models import Cart
 
 from products.models import Product
 
@@ -13,22 +15,30 @@ class CartSerializerUser(serializers.ModelSerializer):
 
 class CartSerializer(serializers.ModelSerializer):
 
-    user = CartSerializerUser(read_only=True)
+    user = CartSerializerUser(read_only=True, validators=[
+        UniqueValidator(queryset=Cart.user, message="cart already created.")])
 
     def create(self, validated_data: Product) -> Cart:
 
-        cart = Cart.objects.create()
-
         total_value = 0
+        print(validated_data["products"])
 
         for product_data in validated_data["products"]:
-            product = Product.objects.get(id=product_data.id)
+            # products = Product.objects.all().filter(id=product_data.id)
+            test = Product.objects.get(id=product_data.id)
+            # print("----------------------------------------")
+            # print(products)
 
-            total_value += product.value
+            # for product in products:
 
-            cart.products.add(product)
+            #     print(product)
 
-        return Cart.objects.create(user=self.context["request"].user, total_value=total_value)
+            total_value += test.value
+
+        cart = Cart.objects.create(
+            user=self.context["request"].user, total_value=total_value)
+        cart.products.set(validated_data["products"])
+        return cart
 
     def update(self, instance: Cart, validated_data: dict) -> Cart:
         products = validated_data.pop('products')

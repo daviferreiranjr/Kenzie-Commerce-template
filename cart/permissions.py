@@ -16,4 +16,4 @@ class IsAdmin(permissions.BasePermission):
 
 class IsCartOwner(permissions.BasePermission):
     def has_object_permission(self, request: Request, view: View, obj: User):
-        return obj.id == request.user.id
+        return request.user.is_seller and obj.id == request.user.id

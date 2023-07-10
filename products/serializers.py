@@ -3,9 +3,10 @@ from .models import Product, ExpectedCategory
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    category = serializers.ChoiceField(choices=ExpectedCategory.choices, default=ExpectedCategory.NAO_INFORMADO)
+    category = serializers.ChoiceField(
+        choices=ExpectedCategory.choices, default=ExpectedCategory.NAO_INFORMADO)
     available = serializers.SerializerMethodField()
-    
+
     def get_available(self, obj: Product):
         stock = obj.stock
         available = True
@@ -15,8 +16,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ["id", "name", "stock", "value", "available", "category", "user"]
-        read_only_fields = ["id", "user"]
+        fields = ["id", "name", "stock", "value", "available", "user"]
+        read_only_fields = ['id', 'user']
 
         def create(self, validated_data: dict) -> Product:
             return Product.objects.create(**validated_data)

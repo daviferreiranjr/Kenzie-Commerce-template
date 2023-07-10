@@ -1,8 +1,11 @@
+from django.shortcuts import render
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Product
 from .serializers import ProductSerializer
 from .permissions import IsSellerPermission, IsAdminPermission
 from rest_framework import generics
+
+# Create your views here.
 
 
 class ProductView(generics.ListCreateAPIView):
@@ -16,10 +19,12 @@ class ProductView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         route_name_parameter = self.request.query_params.get("name", None)
-        route_categoy_parameter = self.request.query_params.get("category", None)
+        route_categoy_parameter = self.request.query_params.get(
+            "category", None)
 
         if route_name_parameter:
-            queryset = Product.objects.filter(name__icontains=route_name_parameter)
+            queryset = Product.objects.filter(
+                name__icontains=route_name_parameter)
             return queryset
 
         if route_categoy_parameter:
