@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Product
 from .serializers import ProductSerializer
-from .permissions import IsSellerOrAdminPermission
+from .permissions import IsSellerPermission, IsAdminPermission
 from rest_framework import generics
 
 # Create your views here.
@@ -10,7 +10,7 @@ from rest_framework import generics
 
 class ProductView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsSellerOrAdminPermission]
+    permission_classes = [IsSellerPermission | IsAdminPermission]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -38,6 +38,6 @@ class ProductView(generics.ListCreateAPIView):
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsSellerOrAdminPermission]
+    permission_classes = [IsSellerPermission | IsAdminPermission]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
