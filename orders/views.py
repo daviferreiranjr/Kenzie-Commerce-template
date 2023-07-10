@@ -19,7 +19,7 @@ class OrderView(CreateAPIView):
     def perform_create(self, serializer):
         order = serializer.save(user_id=self.request.user.id)
 
-        products = order.products.all()
+        products = order.user
 
         products_by_seller = {}
 
