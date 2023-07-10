@@ -7,7 +7,7 @@ class ProductSerializer(serializers.ModelSerializer):
     available = serializers.SerializerMethodField()
     
     def get_available(self, obj: Product):
-        stock = [product.stock for product in obj.all()]
+        stock = obj.stock
         available = True
         if stock <= 0:
             available = False
