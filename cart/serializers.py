@@ -25,7 +25,7 @@ class CartSerializer(serializers.ModelSerializer):
 
         for product_data in validated_data["products"]:
             # products = Product.objects.all().filter(id=product_data.id)
-            test = Product.objects.get(id=product_data.id)
+            product = Product.objects.get(id=product_data.id)
             # print("----------------------------------------")
             # print(products)
 
@@ -33,7 +33,7 @@ class CartSerializer(serializers.ModelSerializer):
 
             #     print(product)
 
-            total_value += test.value
+            total_value += product.value
 
         cart = Cart.objects.create(
             user=self.context["request"].user, total_value=total_value)
