@@ -1,11 +1,8 @@
 from rest_framework import generics
 
 from .models import Cart
-from products.models import Product
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import CartSerializer
-from .permissions import IsCartOwner, IsAdmin, IsAdminOrSeller
-from products.models import Product
 
 
 class CartView(generics.CreateAPIView):
