@@ -11,7 +11,7 @@ class AddressSerializerUser(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    address = AddressSerializerUser()
+    address = AddressSerializerUser(read_only=True)
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
