@@ -21,18 +21,9 @@ class CartSerializer(serializers.ModelSerializer):
     def create(self, validated_data: Product) -> Cart:
 
         total_value = 0
-        print(validated_data["products"])
 
         for product_data in validated_data["products"]:
-            # products = Product.objects.all().filter(id=product_data.id)
             product = Product.objects.get(id=product_data.id)
-            # print("----------------------------------------")
-            # print(products)
-
-            # for product in products:
-
-            #     print(product)
-
             total_value += product.value
 
         cart = Cart.objects.create(

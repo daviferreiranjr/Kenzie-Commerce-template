@@ -15,5 +15,5 @@ class Cart(models.Model):
 
     products = models.ManyToManyField(
         "products.Product",
-        related_name="products",
+        related_name="products"
     )

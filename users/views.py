@@ -14,6 +14,6 @@ class UserView(generics.ListCreateAPIView):
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAdmin or IsAccountOwner]
+    permission_classes = [IsAccountOwner | IsAdmin]
 
     queryset = User.objects.all()

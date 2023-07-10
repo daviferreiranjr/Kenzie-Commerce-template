@@ -1,11 +1,11 @@
 from rest_framework import permissions
 from rest_framework.views import View
-from orders.models import Order
+from .models import Order
 
 
-class AuthenticationSeller(permissions.BasePermission):
-    def has_object_permission(self, request, view: View, obj: Order):
-        products = obj.products.all()
-        sellers = set([product.user_id for product in products])
+class IsSellerPermission(permissions.BasePermission):
+    def has_object_permission(self, request, view: View, obj: Order) -> bool:
+        if request.method in permissions.SAFE_METHODS:
+            return True
 
-        return request.user.id in sellers
+        return request.user.is_seller and request.user == obj.user

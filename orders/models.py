@@ -9,7 +9,7 @@ class ExpectedStatus(models.TextChoices):
 
 
 class Order(models.Model):
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(null=True)
     status = models.CharField(
         max_length=50,
         choices=ExpectedStatus.choices,
