@@ -18,34 +18,6 @@ class OrderView(CreateAPIView):
     def perform_create(self, serializer):
         order = serializer.save(user=self.request.user)
 
-        # products_by_seller = {}
-
-        # for product in products:
-        #     seller_id = product.user_id
-
-        #     if seller_id in products_by_seller:
-        #         products_by_seller[seller_id].append(product)
-        #     else:
-        #         products_by_seller[seller_id] = [product]
-
-        # client_email = order.user.email
-        # subject = "Pedido realizado"
-        # message = f"Olá {order.user.username}, seu pedido foi feito com sucesso.\n\nDetalhes do pedido:"
-
-        # for seller_id, products in products_by_seller.items():
-        #     message += f"\n\nProdutos do vendedor {products[0].user.username}:"
-        #     for product in products:
-        #         message += f"\n- {product.name} ({product.quantity})"
-
-        # send_mail(
-        #     subject,
-        #     message,
-        #     settings.DEFAULT_FROM_EMAIL,
-        #     [client_email],
-        #     fail_silently=False,
-        # )
-
-
 class OrderUpdateRetriverView(RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated, IsSellerPermission]
